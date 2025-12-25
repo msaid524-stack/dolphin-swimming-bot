@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>هيا نتعلم سباحة الدولفين</title>
+<style>
+body {
+  margin: 0;
+  font-family: Tahoma, Arial;
+  background: #e0f7fa;
+  direction: rtl;
+}
+
+.chat-app {
+  max-width: 420px;
+  height: 100vh;
+  margin: auto;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background: #0277bd;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.bot, .user {
+  margin: 6px 0;
+  padding: 10px 14px;
+  border-radius: 15px;
+  max-width: 85%;
+  font-size: 14px;
+}
+
+.bot {
+  background: #e1f5fe;
+}
+
+.user {
+  background: #c8e6c9;
+  margin-right: auto;
+}
+
+.footer {
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border: none;
+  border-radius: 10px;
+  background: #0277bd;
+  color: white;
+  font-size: 14px;
+}
+</style>
+</head>
+<body>
+
+<div class="chat-app">
+  <div class="header">🐬 هيا نتعلم سباحة الدولفين</div>
+  <div class="messages" id="chat"></div>
+  <div class="footer" id="options"></div>
+</div>
+
+<script>
+let unit = 0;
+const chat = document.getElementById("chat");
+const options = document.getElementById("options");
+
+function bot(text) {
+  let div = document.createElement("div");
+  div.className = "bot";
+  div.innerHTML = text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function user(text) {
+  let div = document.createElement("div");
+  div.className = "user";
+  div.innerText = text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function buttons(btns) {
+  options.innerHTML = "";
+  btns.forEach(b => {
+    let btn = document.createElement("button");
+    btn.innerText = b.text;
+    btn.onclick = b.action;
+    options.appendChild(btn);
+  });
+}
+
+function start() {
+  bot("مرحبًا بك 🌊<br>أنا مدربك الرقمي لتعلم سباحة الدولفين.<br>هل أنت مستعد للبدء؟");
+  buttons([
+    {text:"نعم، مستعد", action:()=>next()},
+    {text:"لاحقًا", action:()=>bot("سأكون بانتظارك 😊")}
+  ]);
+}
+
+function next() {
+  unit++;
+  options.innerHTML = "";
+  runUnit();
+}
+
+function runUnit() {
+  switch(unit) {
+    case 1:
+      bot("📘 الوحدة 1: التهيئة والتعارف<br>سباحة الدولفين تعتمد على التموج الكامل للجسم.");
+      buttons([{text:"متابعة", action:()=>next()}]);
+      break;
+    case 2:
+      bot("📘 الوحدة 2: وضع الجسم<br>يجب أن يكون الجسم مستقيمًا وانسيابيًا داخل الماء.");
+      buttons([{text:"فهمت", action:()=>next()}]);
+      break;
+    case 3:
+      bot("📘 الوحدة 3: التموج<br>من أين تبدأ حركة الدولفين؟");
+      buttons([
+        {text:"من الصدر", action:()=>{user("من الصدر"); next();}},
+        {text:"من الركبتين", action:()=>{user("من الركبتين"); bot("❌ الحركة تبدأ من الصدر");}} 
+      ]);
+      break;
+    case 4:
+      bot("📘 الوحدة 4: التموج مع الانزلاق<br>حاول الدمج بين التموج ووضع الجسم.");
+      buttons([{text:"تم", action:()=>next()}]);
+      break;
+    case 5:
+      bot("📘 الوحدة 5: حركة الذراعين<br>الذراعان هما المحرك الأساسي للدفع.");
+      buttons([{text:"متابعة", action:()=>next()}]);
+      break;
+    case 6:
+      bot("📘 الوحدة 6: التنفس<br>التنفس الصحيح يكون أثناء الدفع للأمام.");
+      buttons([{text:"واضح", action:()=>next()}]);
+      break;
+    case 7:
+      bot("📘 الوحدة 7: الأداء المتكامل<br>جرّب سباحة دولفين لمسافة قصيرة.");
+      buttons([{text:"أنجزت", action:()=>next()}]);
+      break;
+    case 8:
+      bot("🎉 الوحدة 8: التقييم النهائي<br>أحسنت! لقد أتممت الرحلة المعرفية بنجاح.");
+      buttons([{text:"إنهاء", action:()=>bot("🏅 شهادة إنجاز رقمية")}]);
+      break;
+    default:
+      bot("تمت الرحلة المعرفية كاملة! 🌊🏅");
+      options.innerHTML = "";
+  }
+}
+
+start();
+</script>
+
+</body>
+</html>
